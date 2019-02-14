@@ -20,7 +20,6 @@
 	    }
 	},
     "require": {
-        "laravelcollective/html": "^5.5",
         "prettus/l5-repository": "^2.6"
     },
     "minimum-stability": "dev"
