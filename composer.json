@@ -1,6 +1,7 @@
 {
     "name": "pablito/structure",
     "description": "A basic structure for a RestApis environment",
+    "license": "MIT",
     "authors": [
         {
             "name": "Pablo Bilvao",
@@ -22,5 +23,8 @@
     "require": {
         "prettus/l5-repository": "^2.6"
     },
-    "minimum-stability": "dev"
+    "config": {
+    	"preferred-install": "dist"
+    },
+    "minimum-stability": "stable"
 }
