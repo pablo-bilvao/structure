@@ -1,0 +1,27 @@
+{
+    "name": "pablito/structure",
+    "description": "A basic structure for a RestApis environment",
+    "authors": [
+        {
+            "name": "Pablo Bilvao",
+            "email": "pablo.bilvao@123seguro.com.ar"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Structure\\Basic\\StructureServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+	    "psr-4": {
+	      "Structure\\Basic\\": "src/"
+	    }
+	},
+    "require": {
+        "laravelcollective/html": "^5.5",
+        "prettus/l5-repository": "^2.6"
+    },
+    "minimum-stability": "dev"
+}
