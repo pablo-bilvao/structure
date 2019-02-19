@@ -1,6 +1,7 @@
 {
     "name": "pablito/structure",
     "description": "A basic structure for a RestApis environment",
+    "license": "MIT",
     "authors": [
         {
             "name": "Pablo Bilvao",
