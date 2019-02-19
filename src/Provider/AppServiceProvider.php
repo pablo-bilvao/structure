@@ -25,17 +25,17 @@ class AppServiceProvider extends ServiceProvider{
         $services          = config('microservices.services');
         
         foreach ($services as $key => $object) {            
-            $service    = $path_services.$object['name'];
+            $service = $path_services.$object['name'];
+            $key     = strtolower( app('structure')->transformNameService($key) );
             
             if( $object['repository'] ){
                 $repository = $path_repositories.$object['repository'];
-
-                $this->app->singleton(str_singular($key), function($app) use($service, $repository){
+                $this->app->singleton($key, function($app) use($service, $repository){
                     return new $service( app($repository) );
                 });
             }
             else{
-                $this->app->singleton(str_singular($key), function($app) use($service){
+                $this->app->singleton($key, function($app) use($service){
                     return new $service;
                 });
             }

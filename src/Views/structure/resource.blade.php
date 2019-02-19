@@ -8,12 +8,20 @@
         
         public function toArray($request)
         {            
+            @if( !empty($resources) )
+            
             return [
                 @foreach( $resources as $resource )
 '{{ $resource }}' => $this->{{ $resource }},
                 @endforeach
 ];
         }
+            @else
+            
+            return $this->resource;            
+        
+        }
+            @endif
 
         public function withResponse($request, $response)
         {

@@ -34,9 +34,17 @@
 		}
 
 		public function createMicroserviceConfigFile(){
-			$handler = fopen( config_path('microservices.php'), 'w+' );
-	        fwrite( $handler, "<?php \n\n\t" );
-	        fwrite( $handler, view( 'structureview::microservice', ['services' => [] ] )->render() );
-	        fclose( $handler );
+			if( !file_exists( config_path('microservices.php') ) ){
+				$handler = fopen( config_path('microservices.php'), 'w+' );
+		        fwrite( $handler, "<?php \n\n\t" );
+		        fwrite( $handler, view( 'structureview::microservice', ['services' => [] ] )->render() );
+		        fclose( $handler );				
+			}
+		}
+
+		public function transformNameService( $name_service ){
+			$myService = studly_case( str_singular($name_service) );
+            
+            return $myService;
 		}
 	}

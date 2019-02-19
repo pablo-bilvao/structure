@@ -16,6 +16,18 @@
 
 		],
 
+		/* Your routes structure here (3 levels) */
+        'routes' => [
+
+        ],
+
+		/* Example Syntax */
+        'routes_example' => [
+            'level-name1', // level 1
+            'level-name2', // level 2
+            'level-name3' // level 3
+        ],
+
 		/* Example Syntax */
 		'services_example' => [
 			'services_name' => [

@@ -25,7 +25,10 @@
          */
         public function rules()
         {
-            return {{ $rules }};            
+            return [
+                @foreach($rules as $field => $condition)
+'{{$field}}' => '{{ $condition }}',
+            @endforeach];
         }
 
         public function failedValidation( Validator $validator ){

@@ -1,10 +1,10 @@
 <?php
 
-   namespace Structure\Basic;
+namespace Structure\Basic;
 
-   use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-   class StructureServiceProvider extends ServiceProvider{
+class StructureServiceProvider extends ServiceProvider{
     /**
      * Bootstrap any application services.
      *
