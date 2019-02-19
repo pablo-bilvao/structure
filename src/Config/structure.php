@@ -10,6 +10,7 @@
 		'path_observers'  	=> 'App\Observers',
 		'path_repositories' => 'App\Repositories\\',
 		'path_services'     => 'App\Services\\',
+		'replace_all'       => true,
 
 		/* Your services here */
 		'services' => [
@@ -18,14 +19,16 @@
 
 		/* Your routes structure here (3 levels) */
         'routes' => [
-
+        	['prefix' => '', 'middleware' => ['cors']], // level 1
+            ['prefix' => '', 'middleware' => []], // level 2
+            ['prefix' => '', 'middleware' => []] // level 3
         ],
 
 		/* Example Syntax */
         'routes_example' => [
-            'level-name1', // level 1
-            'level-name2', // level 2
-            'level-name3' // level 3
+            ['prefix' => 'level-name1', 'middleware' => ['cors']], // level 1
+            ['prefix' => 'level-name2', 'middleware' => []], // level 2
+            ['prefix' => 'level-name3', 'middleware' => []] // level 3
         ],
 
 		/* Example Syntax */
