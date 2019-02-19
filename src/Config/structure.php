@@ -37,9 +37,10 @@
 				'fillables'        => ["param1", "param2"],
 				'fieldSearcheable' => ["param1" => "like"],
 				'resources'        => ['param1', 'param2', 'param3'],
-				'rules_store'      => '[]',
-				'rules_update'     => '[]',
-				'observer'		   => FALSE
+				'routes'           => ['index', 'store', 'update'],
+                'rules_store'      => [],
+                'rules_update'     => [],
+                'observer'         => FALSE
 			]
 		]
 	];
