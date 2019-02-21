@@ -10,12 +10,9 @@
 		'path_observers'  	=> 'App\Observers',
 		'path_repositories' => 'App\Repositories\\',
 		'path_services'     => 'App\Services\\',
-		'replace_all'       => true,
-
-		/* Your services here */
-		'services' => [
-
-		],
+		
+		/* Component Options */
+		'replace_all' => true,
 
 		/* Your routes structure here (3 levels) */
         'routes' => [
@@ -23,6 +20,11 @@
             ['prefix' => '', 'middleware' => []], // level 2
             ['prefix' => '', 'middleware' => []] // level 3
         ],
+		
+		/* Your services here */
+		'services' => [
+
+		],
 
 		/* Example Syntax */
         'routes_example' => [

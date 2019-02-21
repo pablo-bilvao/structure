@@ -109,10 +109,11 @@ class BuildStructure extends Command{
         fclose( $handler );
 
         /* Routes Config */
-        $handler = fopen( base_path('routes/api.php'), 'w+' );
-        fwrite( $handler, "<?php \n\n\t" );
-        fwrite( $handler, view( 'structureview::routes', ['services' => array_keys($services_to_build), 'services_routes' => data_get( config('structure.services'), '*.routes' ), 'routes' => config('structure.routes')] )->render() );
-        fclose( $handler );
-
+        if( config('structure.replace_all') ){
+            $handler = fopen( base_path('routes/api.php'), 'w+' );
+            fwrite( $handler, "<?php \n\n\t" );
+            fwrite( $handler, view( 'structureview::routes', ['services' => array_keys($services_to_build), 'services_routes' => data_get( config('structure.services'), '*.routes' ), 'routes' => config('structure.routes')] )->render() );
+            fclose( $handler );
+        }
     }
 }
