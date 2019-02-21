@@ -104,7 +104,7 @@ En la versión actual y estable cuenta con 3 niveles (no es opcional la cantidad
 
 En esta sección van configurados nuestros servicios, por ejemplo: si necesito crear un Api que me devuelva un `json` con los roles de mi base de datos configuro mi servicio de la siguiente manera: 
 
-Ejemplo 1:
+Ejemplo:
 
 ```php 
   'services' => [
@@ -142,12 +142,17 @@ Puede usarlo de dos maneras:
 Para saber como filtrar que campos necesito traer o filtrar por algún name en particular ver las opciones en:
 <a href="https://github.com/andersao/l5-repository#example-the-criteria">Example Repositories</a>
 
-- Desde cualquier parte del código: `app('rol')->index()`
+- Desde cualquier parte del código: `app('role')->index()`
+
+Internamente lo que hará es tomar el nombre del servicio y crear las clases necesarias para que ese nombre pase a ser un servicio real. 
+
+ACLARACION:
+Su nomenclatura es, pasar de esto: `nombre_servicio_en_ingles_plural` a esto `nombreservicioeninglessingular` para poder usarlo en cualquier parte de su código. Las clases que se crearán seguiran esta convención `NombreServicioEnInglesSingular`
 
 #### Services (estructura)
 ```php
-'services_example' => [
-    'services_name' => [
+'services' => [
+    'service_name' => [
       'fillables'        => ["param1", "param2"],
       'fieldSearcheable' => ["param1" => "like"],
       'resources'        => ['param1', 'param2', 'param3'],
@@ -158,7 +163,21 @@ Para saber como filtrar que campos necesito traer o filtrar por algún name en p
     ]
   ]
 ```
-- `services_name`: nombre de tu servicio (o de la tabla en base de datos) preferiblemente en ingles y plural
+- `service_name`: nombre de tu servicio (o de la tabla en base de datos) preferiblemente en ingles y plural
 - `fillable`: los atributos de la tabla en cuestión
 - `fieldSearcheable`: los atributos que quieren incluir en filtros. Sigue esta regla `"atributo" => "condition"`, vea que si no especifíca el `condition` tomará por default `"="`
 - `resources`: los atributos que necesitan que se devuelva en el json de respuesta. Si deja el array vacío devolverá todos los atributos de la tabla y podra filtrarlos utilizando el parámetro `filter` en su petición `GET`
+- `routes`: en la versión actual se puede declarar 3 opciones, `index` para los GET, `store` para los POST y `update` para los PUT. A partir de estas opciones se crearán los métodos disponibles y las rutas. 
+Ej de uso: `app('role')->update($atributos, $id);` No es necesario que específiqe las 3, puede solo necesitar una sola.
+- `rules_store`: En caso de usar `store` puede específicar las reglas de validación teniendo en cuenta la documentación de <a target="_blank" href="https://laravel.com/docs/5.7/validation#form-request-validation">Laravel</a>
+- `rules_update`: En caso de usar `update` puede específicar las reglas de validación teniendo en cuenta la documentación de <a target="_blank" href="https://laravel.com/docs/5.7/validation#form-request-validation">Laravel</a>
+- `observer`: recibe un boolean, si es `true` le creará una clase en la carpeta de `observers`, en esta versión deberá registrarlo manualmente en su service provider. Tenga en cuenta la documentación de <a target="_blank" href="https://laravel.com/docs/5.7/eloquent#observers">Laravel</a>
+
+## Método Principal
+
+Una vez configurado el archivo, o cada vez que lo modifiquemos tendremos que correr un comando de ArtisanCLI para indicarle a nuestra aplicación que hay nuevos o modificaciones en nuestros servicios básicos.
+
+Command:
+```shell
+php artisan build:structure
+```
