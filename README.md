@@ -2,6 +2,20 @@
 
 Structure Basic es un componente para Laravel. Nos permite crear una estrucutra básica y generar RestApis a partir de un archivo de configuración.
 
+## Tabla de Contenidos
+- <a href="#instalación">Instalación</a>
+    - <a href="#composer">Composer</a>
+    - <a href="#laravel">Laravel</a>
+- <a href="#cómo-funciona">¿Cómo Funciona?</a>
+    - <a href="#publicar-configuración">Publicar Configuración</a>
+    - <a href="#archivo-configuración">Archivo Configuración</a>
+        - <a href="#default-paths">Default Paths</a>
+        - <a href="#component-options">Component Options</a>
+        - <a href="#routes">Routes</a>
+        - <a href="#services-ejemplo">Services (ejemplo)</a>
+        - <a href="#services-estructura">Services (estructura)</a>        
+- <a href="#método-principal">Método Principal</a>
+
 ## Instalación
 
 ### Composer
