@@ -12,7 +12,7 @@
 		'path_services'     => 'App\Services\\',
 		
 		/* Component Options */
-		'replace_all' => true,
+		'replace_all' => false,
 
 		/* Your routes structure here (3 levels) */
         'routes' => [
