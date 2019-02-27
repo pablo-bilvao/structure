@@ -5,28 +5,16 @@
 	class Structure{
 
 		public function checkExistsDirectories(){
-			$this->path_controller = app_path(str_replace('\\', '/', str_replace('App\\', '', config('structure.path_controller'))));
-			$this->path_requests = app_path(str_replace('\\', '/', str_replace('App\\', '', config('structure.path_requests'))));
-			$this->path_resources = app_path(str_replace('\\', '/', str_replace('App\\', '', config('structure.path_resources'))));
-			$this->path_models = app_path(str_replace('\\', '/', str_replace('App\\', '', config('structure.path_models'))));
-			$this->path_observers = app_path(str_replace('\\', '/', str_replace('App\\', '', config('structure.path_observers'))));
-			$this->path_repositories = app_path(str_replace('\\', '/', str_replace('App\\', '', config('structure.path_repositories'))));
-			$this->path_services = app_path(str_replace('\\', '/', str_replace('App\\', '', config('structure.path_services'))));
+			$paths_configs = config('structure.paths');
+			$this->paths   = [];
 
-			if( !is_dir($this->path_controller) )
-				$this->buildDirectory( $this->path_controller );
-			if( !is_dir($this->path_requests) )
-				$this->buildDirectory( $this->path_requests );
-			if( !is_dir($this->path_resources) )
-				$this->buildDirectory( $this->path_resources );
-			if( !is_dir($this->path_models) )
-				$this->buildDirectory( $this->path_models );
-			if( !is_dir($this->path_observers) )
-				$this->buildDirectory( $this->path_observers );
-			if( !is_dir($this->path_repositories) )
-				$this->buildDirectory( $this->path_repositories );
-			if( !is_dir($this->path_services) )
-				$this->buildDirectory( $this->path_services );
+			foreach ($paths_configs as $path_name => $path_value) {
+				$this->paths[ $path_name ] = app_path(str_replace('\\', '/', str_replace('App\\', '', $path_value)));
+
+				if( !is_dir($this->paths[ $path_name ]) )
+					$this->buildDirectory( $this->paths[ $path_name ] );
+			}
+			
 		}
 
 		public function buildDirectory( $pathname ){

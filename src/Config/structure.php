@@ -3,16 +3,19 @@
 	return [
 		
 		/* Default Paths */
-		'path_controller' 	=> 'App\Http\Controllers\API\\',
-		'path_requests'   	=> 'App\Http\Requests\API\\',
-		'path_resources'  	=> 'App\Http\Resources\\',
-		'path_models'	  	=> 'App\Models\\',
-		'path_observers'  	=> 'App\Observers',
-		'path_repositories' => 'App\Repositories\\',
-		'path_services'     => 'App\Services\\',
+		'paths' => [
+			'contracts'    => 'App\Contracts\\',
+			'models'	   => 'App\Models\\',
+			'observers'    => 'App\Observers',
+			'repositories' => 'App\Repositories\\',
+			'services'     => 'App\Services\\',
+			'controller'   => 'App\Http\Controllers\API\\',
+			'requests'     => 'App\Http\Requests\API\\',
+			'resources'    => 'App\Http\Resources\\',
+		],
 		
 		/* Component Options */
-		'replace_all' => false,
+		'replace_all' => FALSE,
 
 		/* Your routes structure here (3 levels) */
         'routes' => [

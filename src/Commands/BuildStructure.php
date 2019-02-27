@@ -22,22 +22,22 @@ class BuildStructure extends Command{
             
             /* Controller */
             $controller = $myService.'Controller';
-            if( config('structure.replace_all') || !file_exists( app('structure')->path_controller.$controller.'.php' ) ){
-                $handler = fopen( app('structure')->path_controller.$controller.'.php', 'w+' );
+            if( config('structure.replace_all') || !file_exists( app('structure')->paths['controller'].$controller.'.php' ) ){
+                $handler = fopen( app('structure')->paths['controller'].$controller.'.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
-                fwrite( $handler, view( 'structureview::controller', ['service' => $myService] )->render() );
+                fwrite( $handler, view( 'structureview::controller', ['service' => $myService, 'routes' => $info['routes']] )->render() );
                 fclose( $handler );            
             }
 
             /* Requests */
             if( in_array('store', $info['routes']) || in_array('update', $info['routes']) ){
-                if( !is_dir( app('structure')->path_requests.$myService ) )
-                    app('structure')->buildDirectory( app('structure')->path_requests.$myService );
+                if( !is_dir( app('structure')->paths['requests'].$myService ) )
+                    app('structure')->buildDirectory( app('structure')->paths['requests'].$myService );
             }
 
             if( in_array('store', $info['routes']) ){
-                if( config('structure.replace_all') || !file_exists( app('structure')->path_requests.$myService.'/StoreRequest.php' ) ){
-                    $handler = fopen( app('structure')->path_requests.$myService.'/StoreRequest.php', 'w+' );
+                if( config('structure.replace_all') || !file_exists( app('structure')->paths['requests'].$myService.'/StoreRequest.php' ) ){
+                    $handler = fopen( app('structure')->paths['requests'].$myService.'/StoreRequest.php', 'w+' );
                     fwrite( $handler, "<?php \n\n\t" );
                     fwrite( $handler, view( 'structureview::store_request', [ 'service' => $myService, 'rules' => $info['rules_store'] ] )->render() );
                     fclose( $handler );
@@ -45,8 +45,8 @@ class BuildStructure extends Command{
             }
 
             if( in_array('update', $info['routes']) ){
-                if( config('structure.replace_all') || !file_exists( app('structure')->path_requests.$myService.'/UpdateRequest.php' ) ){
-                    $handler = fopen( app('structure')->path_requests.$myService.'/UpdateRequest.php', 'w+' );
+                if( config('structure.replace_all') || !file_exists( app('structure')->paths['requests'].$myService.'/UpdateRequest.php' ) ){
+                    $handler = fopen( app('structure')->paths['requests'].$myService.'/UpdateRequest.php', 'w+' );
                     fwrite( $handler, "<?php \n\n\t" );
                     fwrite( $handler, view( 'structureview::update_request', ['service' => $myService, 'rules' => $info['rules_update']] )->render() );
                     fclose( $handler );
@@ -55,8 +55,8 @@ class BuildStructure extends Command{
 
             /* Resources */
             $resource = $myService.'Resource';
-            if( config('structure.replace_all') || !file_exists( app('structure')->path_resources.$resource.'.php' ) ){
-                $handler = fopen( app('structure')->path_resources.$resource.'.php', 'w+' );
+            if( config('structure.replace_all') || !file_exists( app('structure')->paths['resources'].$resource.'.php' ) ){
+                $handler = fopen( app('structure')->paths['resources'].$resource.'.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::resource', ['service' => $myService, 'resources' => $info['resources'] ] )->render() );
                 fclose( $handler );            
@@ -64,8 +64,8 @@ class BuildStructure extends Command{
 
             /* Models */
             $model = $myService;
-            if( config('structure.replace_all') || !file_exists( app('structure')->path_models.$model.'.php' ) ){
-                $handler = fopen( app('structure')->path_models.$model.'.php', 'w+' );
+            if( config('structure.replace_all') || !file_exists( app('structure')->paths['models'].$model.'.php' ) ){
+                $handler = fopen( app('structure')->paths['models'].$model.'.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::model', ['service' => $myService, 'fillables' => $info['fillables'] ] )->render() );
                 fclose( $handler );            
@@ -74,8 +74,8 @@ class BuildStructure extends Command{
             /* Observers */
             if( $info['observer'] ){                
                 $observer = $myService.'Observer';
-                if( config('structure.replace_all') || !file_exists( app('structure')->path_observers.$observer.'.php' ) ){
-                    $handler = fopen( app('structure')->path_observers.$observer.'.php', 'w+' );
+                if( config('structure.replace_all') || !file_exists( app('structure')->paths['observers'].$observer.'.php' ) ){
+                    $handler = fopen( app('structure')->paths['observers'].$observer.'.php', 'w+' );
                     fwrite( $handler, "<?php \n\n\t" );
                     fwrite( $handler, view( 'structureview::observer', ['service' => $myService] )->render() );
                     fclose( $handler );            
@@ -84,8 +84,8 @@ class BuildStructure extends Command{
 
             /* Repositories */            
             $repository = $myService.'Repository';
-            if( config('structure.replace_all') || !file_exists( app('structure')->path_repositories.$repository.'.php' ) ){
-                $handler = fopen( app('structure')->path_repositories.$repository.'.php', 'w+' );
+            if( config('structure.replace_all') || !file_exists( app('structure')->paths['repositories'].$repository.'Repository.php' ) ){
+                $handler = fopen( app('structure')->paths['repositories'].$repository.'Repository.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::repository', ['service' => $myService, 'fieldSearcheable' => $info['fieldSearcheable']] )->render() );
                 fclose( $handler );            
@@ -93,19 +93,28 @@ class BuildStructure extends Command{
 
             /* Services */
             $service = $myService;
-            if( config('structure.replace_all') || !file_exists( app('structure')->path_services.$service.'.php' ) ){
-                $handler = fopen( app('structure')->path_services.$service.'.php', 'w+' );
+            if( config('structure.replace_all') || !file_exists( app('structure')->paths['services'].$service.'Service.php' ) ){
+                $handler = fopen( app('structure')->paths['services'].$service.'Service.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::service', ['service' => $myService, 'routes' => $info['routes']] )->render() );
                 fclose( $handler );            
             }
 
+            /* Contracts */
+            $contract = $myService;
+
+            if( config('structure.replace_all') || !file_exists( app('structure')->paths['contracts'].$contract.'Interface.php' ) ){
+                $handler = fopen( app('structure')->paths['contracts'].$contract.'Interface.php', 'w+' );
+                fwrite( $handler, "<?php \n\n\t" );
+                fwrite( $handler, view( 'structureview::contract', ['service' => $myService, 'routes' => $info['routes']] )->render() );
+                fclose( $handler );            
+            }
         }
         
         /* Microservices Config */
         $handler = fopen( config_path('microservices.php'), 'w+' );
         fwrite( $handler, "<?php \n\n\t" );
-        fwrite( $handler, view( 'structureview::microservice', ['services' => array_keys($services_to_build)] )->render() );
+        fwrite( $handler, view( 'structureview::microservice', ['services' => array_keys($services_to_build), 'paths' => config('structure.paths')] )->render() );
         fclose( $handler );
 
         /* Routes Config */

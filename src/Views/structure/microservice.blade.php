@@ -1,8 +1,10 @@
 
 return [
-
-    	'path_services' => 'App\Services\\',
-    	'path_repositories' => 'App\Repositories\\',
+		'paths' => [
+	    	'services'     => '{{ $paths['services'] }}\',
+	    	'repositories' => '{{ $paths['repositories'] }}\',
+			'contracts'    => '{{ $paths['contracts'] }}\'
+		],
 		@if( count($services) > 0 )
 'services' => [
 		@foreach( $services as $service )

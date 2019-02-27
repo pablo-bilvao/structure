@@ -1,9 +1,10 @@
 	
 	namespace App\Services;
-
+	
+	use App\Contracts\{{ $service }}Interface;
 	use App\Repositories\{{ $service }}Repository;
 
-	class {{ $service }}{
+	class {{ $service }}Service implements {{ $service }}Interface{
 
 		public function __construct( {{ $service }}Repository $repository ){
 			$this->repository = $repository;
