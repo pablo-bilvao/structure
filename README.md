@@ -54,15 +54,18 @@ Una vez ejecutado el comando de Artisan CLI verás creado en `config/` un archiv
 Lo primero que verás en el archivo de configuración será esto:
 
 ```php
-return [	
+return [  
   /* Default Paths */
-  'path_controller'    => 'App\Http\Controllers\API\\',
-  'path_requests'      => 'App\Http\Requests\API\\',
-  'path_resources'     => 'App\Http\Resources\\',
-  'path_models'        => 'App\Models\\',
-  'path_observers'     => 'App\Observers',
-  'path_repositories'  => 'App\Repositories\\',
-  'path_services'      => 'App\Services\\',
+  'paths' => [
+      'contracts'    => 'App\Contracts\\',
+      'models'       => 'App\Models\\',
+      'observers'    => 'App\Observers',
+      'repositories' => 'App\Repositories\\',
+      'services'     => 'App\Services\\',
+      'controller'   => 'App\Http\Controllers\API\\',
+      'requests'     => 'App\Http\Requests\API\\',
+      'resources'    => 'App\Http\Resources\\',
+  ],  
   
   /* Component Options */
   'replace_all'        => false,
@@ -156,12 +159,27 @@ Puede usarlo de dos maneras:
 Para saber como filtrar que campos necesito traer o filtrar por algún name en particular ver las opciones en:
 <a href="https://github.com/andersao/l5-repository#example-the-criteria">Example Repositories</a>
 
-- Desde cualquier parte del código: `app('role')->index()`
+- Si lo queres utilizar desde algún lugar de tu código, tendrás que declarar el uso de la interfaz de tu servicio en la clase donde lo vas a utilizar. Veamos un ejemplo:
+```php
+    namespace App\Http\Controllers\API;
+    use App\Http\Controllers\Controller;
+    use App\Http\Resources\RoleResource;
+    use App\Contracts\RoleInterface;  
+    
+    class RoleController extends Controller
+    {
+        public function __construct( RoleInterface $role ){
+            $this->role = $role;
+        }
 
-Internamente lo que hará es tomar el nombre del servicio y crear las clases necesarias para que ese nombre pase a ser un servicio real. 
+        public function index(){
+            return RoleResource::collection( $this->role->index() );
+        }
+    }
+```
 
 ACLARACION:
-Su nomenclatura es, pasar de esto: `nombre_servicio_en_ingles_plural` a esto `nombreservicioeninglessingular` para poder usarlo en cualquier parte de su código. Las clases que se crearán seguiran esta convención `NombreServicioEnInglesSingular`
+El nombre de la interfaz pasará de esto: `nombre_servicio_en_ingles_plural` (nombre del servicio en el archivo de configuración) a esto `NombreServicioEnInglesSingularInterface`.
 
 #### Services (estructura)
 ```php
