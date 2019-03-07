@@ -13,6 +13,10 @@ class AppServiceProvider extends ServiceProvider{
      */
     public function boot(){
         
+        $this->publishes([
+            __DIR__.'/Config/structure.php' => config_path('structure.php'),
+        ]);
+        
         $this->app->singleton('structure', function($app){
             return new Structure;
         });

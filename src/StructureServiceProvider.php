@@ -12,9 +12,9 @@ class StructureServiceProvider extends ServiceProvider{
      */
     public function boot(){
         
-        $this->publishes([
-            __DIR__.'/Config/structure.php' => config_path('structure.php'),
-        ]);
+        // $this->publishes([
+        //     __DIR__.'/Config/structure.php' => config_path('structure.php'),
+        // ]);
 
         $this->loadViewsFrom(__DIR__.'/Views/structure', 'structureview');
         $this->commands('Structure\Basic\Commands\BuildStructure');
