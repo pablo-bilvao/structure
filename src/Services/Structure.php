@@ -25,7 +25,7 @@
 			if( !file_exists( config_path('microservices.php') ) ){
 				$handler = fopen( config_path('microservices.php'), 'w+' );
 		        fwrite( $handler, "<?php \n\n\t" );
-		        fwrite( $handler, view( 'structureview::microservice', ['services' => [] ] )->render() );
+		        fwrite( $handler, view( 'structureview::microservice', ['services' => [], 'paths' => $this->paths ] )->render() );
 		        fclose( $handler );				
 			}
 		}
