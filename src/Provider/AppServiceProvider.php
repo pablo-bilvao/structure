@@ -25,21 +25,23 @@ class AppServiceProvider extends ServiceProvider{
         $path_repositories = config('microservices.paths.repositories');
         $services          = config('microservices.services');
         
-        foreach ($services as $key => $object) {            
-            $service   = $path_services.$object['name'].'Service';
-            $interface = $path_contracts.$object['name'].'Interface';
-            $key       = strtolower( app('structure')->transformNameService($key) );
-            
-            if( $object['repository'] ){
-                $repository = $path_repositories.$object['repository'];
-                $this->app->bind( $interface, function($app) use ($service, $repository){
-                    return new $service( app($repository) );
-                });                
-            }
-            else{
-                $this->app->bind( $interface, $service );
-            }
+        if( $services ){
+            foreach ($services as $key => $object) {            
+                $service   = $path_services.$object['name'].'Service';
+                $interface = $path_contracts.$object['name'].'Interface';
+                $key       = strtolower( app('structure')->transformNameService($key) );
+                
+                if( $object['repository'] ){
+                    $repository = $path_repositories.$object['repository'];
+                    $this->app->bind( $interface, function($app) use ($service, $repository){
+                        return new $service( app($repository) );
+                    });                
+                }
+                else{
+                    $this->app->bind( $interface, $service );
+                }
 
+            }
         }
         ################################################################
         
