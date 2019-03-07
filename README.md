@@ -6,8 +6,7 @@ Structure Basic es un componente para Laravel. Nos permite crear una estrucutra 
 - <a href="#instalación">Instalación</a>
     - <a href="#composer">Composer</a>
     - <a href="#laravel">Laravel</a>
-- <a href="#cómo-funciona">¿Cómo Funciona?</a>
-    - <a href="#publicar-configuración">Publicar Configuración</a>
+- <a href="#cómo-funciona">¿Cómo Funciona?</a>  
     - <a href="#archivo-configuración">Archivo Configuración</a>
         - <a href="#default-paths">Default Paths</a>
         - <a href="#component-options">Component Options</a>
@@ -42,16 +41,9 @@ En tu `config/app.php` agrega `Structure\Basic\StructureServiceProvider::class` 
 ```
 ## ¿Cómo funciona?
 
-### Publicar Configuración
-
-```shell
-php artisan vendor:publish --provider="Structure\Basic\StructureServiceProvider"
-```
-Una vez ejecutado el comando de Artisan CLI verás creado en `config/` un archivo de configuración que se llama `structure.php` en el cual se centrará todo lo que debes configurar para tener `Apis y Servicios` básicos funcionando. Esto te permitirá invertir el tiempo que dedicas a construir Apis donde cumplen un patrón básico y repetitivo en otro tipo de servicios.
-
 ### Archivo Configuración
 
-Lo primero que verás en el archivo de configuración será esto:
+Lo primero que verás en el archivo de configuración (config/structure.php) será esto:
 
 ```php
 return [  
