@@ -4,6 +4,10 @@
 
 	class Structure{
 
+		public function __construct(){
+			$this->createStructureConfigFile();
+		}
+
 		public function checkExistsDirectories(){
 			$paths_configs = config('structure.paths');
 			$this->paths   = [];
@@ -19,6 +23,15 @@
 
 		public function buildDirectory( $pathname ){
 			mkdir($pathname, 0775, true);
+		}
+
+		public function createStructureConfigFile(){
+			if( !file_exists( config_path('structure.php') ) ){
+				$handler = fopen( config_path('structure.php'), 'w+' );
+		        fwrite( $handler, "<?php \n\n\t" );
+		        fwrite( $handler, view( 'structureview::structure' )->render() );
+		        fclose( $handler );
+			}
 		}
 
 		public function createMicroserviceConfigFile(){
