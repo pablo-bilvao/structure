@@ -34,7 +34,7 @@
 			}
 		}
 
-		public function createMicroserviceConfigFile(){
+		public function createMicroserviceConfigFile(){			
 			if( !file_exists( config_path('microservices.php') ) ){
 				$handler = fopen( config_path('microservices.php'), 'w+' );
 		        fwrite( $handler, "<?php \n\n\t" );

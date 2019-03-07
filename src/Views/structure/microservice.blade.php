@@ -1,9 +1,9 @@
 
 return [
 		'paths' => [
-	    	'services'     => '{{ $paths['services'] }}\',
-	    	'repositories' => '{{ $paths['repositories'] }}\',
-			'contracts'    => '{{ $paths['contracts'] }}\'
+	    	'services'     => 'App\Services\\',
+	    	'repositories' => 'App\Repositories\\',
+			'contracts'    => 'App\Contracts\\'
 		],
 		@if( count($services) > 0 )
 'services' => [
