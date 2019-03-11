@@ -6,6 +6,7 @@
 
 		public function __construct(){
 			$this->createStructureConfigFile();
+			$this->createCircuitBreakerConfigFile();
 		}
 
 		public function checkExistsDirectories(){
@@ -30,6 +31,15 @@
 				$handler = fopen( config_path('structure.php'), 'w+' );
 		        fwrite( $handler, "<?php \n\n\t" );
 		        fwrite( $handler, view( 'structureview::structure' )->render() );
+		        fclose( $handler );
+			}
+		}
+
+		public function createCircuitBreakerConfigFile(){
+			if( !file_exists( config_path('circuit_braker.php') ) ){
+				$handler = fopen( config_path('circuit_braker.php'), 'w+' );
+		        fwrite( $handler, "<?php \n\n\t" );
+		        fwrite( $handler, view( 'structureview::circuit_braker' )->render() );
 		        fclose( $handler );
 			}
 		}

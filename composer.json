@@ -21,8 +21,8 @@
 	    }
 	},
     "require": {
-        "laravelcollective/html": "^5.5",
-        "prettus/l5-repository": "^2.6"
+        "prettus/l5-repository": "^2.6",
+        "francescomalatesta/laravel-circuit-breaker": "^0.1.0"
     },
     "minimum-stability": "stable"
 }
