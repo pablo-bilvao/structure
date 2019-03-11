@@ -36,10 +36,10 @@
 		}
 
 		public function createCircuitBreakerConfigFile(){
-			if( !file_exists( config_path('circuit_braker.php') ) ){
-				$handler = fopen( config_path('circuit_braker.php'), 'w+' );
+			if( !file_exists( config_path('circuit_breaker.php') ) ){
+				$handler = fopen( config_path('circuit_breaker.php'), 'w+' );
 		        fwrite( $handler, "<?php \n\n\t" );
-		        fwrite( $handler, view( 'structureview::circuit_braker' )->render() );
+		        fwrite( $handler, view( 'structureview::circuit_breaker' )->render() );
 		        fclose( $handler );
 			}
 		}
