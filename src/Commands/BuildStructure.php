@@ -84,8 +84,8 @@ class BuildStructure extends Command{
 
             /* Repositories */            
             $repository = $myService.'Repository';
-            if( config('structure.replace_all') || !file_exists( app('structure')->paths['repositories'].$repository.'Repository.php' ) ){
-                $handler = fopen( app('structure')->paths['repositories'].$repository.'Repository.php', 'w+' );
+            if( config('structure.replace_all') || !file_exists( app('structure')->paths['repositories'].$repository.'.php' ) ){
+                $handler = fopen( app('structure')->paths['repositories'].$repository.'.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::repository', ['service' => $myService, 'fieldSearcheable' => $info['fieldSearcheable']] )->render() );
                 fclose( $handler );            
