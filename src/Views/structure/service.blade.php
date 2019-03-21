@@ -27,7 +27,7 @@
 	    }
 	@endif
 	@if( in_array( 'store', $routes ) )	
-		public function create( $arguments ){			
+		public function create( array $arguments ){			
 			if( \CircuitBreaker::isAvailable( '{{ $service }}Service::create' ) ){
 	        	try{
 	        		return $this->repository->create( $arguments );
@@ -43,7 +43,7 @@
 		}
 	@endif
 	@if( in_array( 'update', $routes ) )	
-		public function update( $arguments, $id ){
+		public function update( array $arguments, string $id ){
 			if( \CircuitBreaker::isAvailable( '{{ $service }}Service::update' ) ){
 	        	try{
 	        		return $this->repository->update( $arguments, $id );
