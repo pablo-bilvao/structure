@@ -26,8 +26,7 @@ class BuildStructure extends Command{
                 $handler = fopen( app('structure')->paths['controller'].$controller.'.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::controller', ['service' => $myService, 'routes' => $info['routes']] )->render() );
-                fclose( $handler );
-                chown(app('structure')->paths['controller'].$controller.'.php', "www-data");
+                fclose( $handler );            
             }
 
             /* Requests */
@@ -42,7 +41,6 @@ class BuildStructure extends Command{
                     fwrite( $handler, "<?php \n\n\t" );
                     fwrite( $handler, view( 'structureview::store_request', [ 'service' => $myService, 'rules' => $info['rules_store'] ] )->render() );
                     fclose( $handler );
-                    chown(app('structure')->paths['requests'].$myService.'/StoreRequest.php', "www-data");
                 }
             }
 
@@ -52,7 +50,6 @@ class BuildStructure extends Command{
                     fwrite( $handler, "<?php \n\n\t" );
                     fwrite( $handler, view( 'structureview::update_request', ['service' => $myService, 'rules' => $info['rules_update']] )->render() );
                     fclose( $handler );
-                    chown(app('structure')->paths['requests'].$myService.'/UpdateRequest.php', "www-data");
                 }
             }
 
@@ -62,8 +59,7 @@ class BuildStructure extends Command{
                 $handler = fopen( app('structure')->paths['resources'].$resource.'.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::resource', ['service' => $myService, 'resources' => $info['resources'] ] )->render() );
-                fclose( $handler );
-                chown(app('structure')->paths['resources'].$resource.'.php', "www-data");
+                fclose( $handler );            
             }
 
             /* Models */
@@ -72,8 +68,7 @@ class BuildStructure extends Command{
                 $handler = fopen( app('structure')->paths['models'].$model.'.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::model', ['service' => $myService, 'fillables' => $info['fillables'] ] )->render() );
-                fclose( $handler );
-                chown(app('structure')->paths['models'].$model.'.php', "www-data");
+                fclose( $handler );            
             }
 
             /* Observers */
@@ -83,8 +78,7 @@ class BuildStructure extends Command{
                     $handler = fopen( app('structure')->paths['observers'].$observer.'.php', 'w+' );
                     fwrite( $handler, "<?php \n\n\t" );
                     fwrite( $handler, view( 'structureview::observer', ['service' => $myService] )->render() );
-                    fclose( $handler );
-                    chown(app('structure')->paths['observers'].$observer.'.php', "www-data");
+                    fclose( $handler );            
                 }
             }
 
@@ -94,8 +88,7 @@ class BuildStructure extends Command{
                 $handler = fopen( app('structure')->paths['repositories'].$repository.'.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::repository', ['service' => $myService, 'fieldSearcheable' => $info['fieldSearcheable']] )->render() );
-                fclose( $handler );
-                chown(app('structure')->paths['repositories'].$repository.'.php', "www-data");
+                fclose( $handler );            
             }
 
             /* Services */
@@ -104,8 +97,7 @@ class BuildStructure extends Command{
                 $handler = fopen( app('structure')->paths['services'].$service.'Service.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::service', ['service' => $myService, 'routes' => $info['routes']] )->render() );
-                fclose( $handler );
-                chown(app('structure')->paths['services'].$service.'Service.php', "www-data");
+                fclose( $handler );            
             }
 
             /* Contracts */
@@ -115,8 +107,7 @@ class BuildStructure extends Command{
                 $handler = fopen( app('structure')->paths['contracts'].$contract.'Interface.php', 'w+' );
                 fwrite( $handler, "<?php \n\n\t" );
                 fwrite( $handler, view( 'structureview::contract', ['service' => $myService, 'routes' => $info['routes']] )->render() );
-                fclose( $handler );
-                chown(app('structure')->paths['contracts'].$contract.'Interface.php', "www-data");
+                fclose( $handler );            
             }
         }
         
@@ -125,7 +116,6 @@ class BuildStructure extends Command{
         fwrite( $handler, "<?php \n\n\t" );
         fwrite( $handler, view( 'structureview::microservice', ['services' => array_keys($services_to_build), 'paths' => config('structure.paths')] )->render() );
         fclose( $handler );
-        chown(config_path('microservices.php'), "www-data");
 
         /* Routes Config */
         if( config('structure.replace_all') ){
