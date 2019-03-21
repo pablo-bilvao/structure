@@ -5,7 +5,7 @@
 		'paths' => [
 			'contracts'    => 'App\Contracts\\',
 			'models'	   => 'App\Models\\',
-			'observers'    => 'App\Observers',
+			'observers'    => 'App\Observers\\',
 			'repositories' => 'App\Repositories\\',
 			'services'     => 'App\Services\\',
 			'controller'   => 'App\Http\Controllers\API\\',
