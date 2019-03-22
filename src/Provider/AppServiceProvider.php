@@ -29,7 +29,6 @@ class AppServiceProvider extends ServiceProvider{
             foreach ($services as $key => $object) {            
                 $service   = $path_services.$object['name'].'Service';
                 $interface = $path_contracts.$object['name'].'Interface';
-                $key       = strtolower( app('structure')->transformNameService($key) );
                 
                 if( $object['repository'] ){
                     $repository = $path_repositories.$object['repository'];
@@ -44,7 +43,15 @@ class AppServiceProvider extends ServiceProvider{
             }
         }
         ################################################################
-        
+        $services_with_observers = array_where(config('structure.services'), function($value, $key){ return $value['observer']; });
+        if( $services_with_observers ){
+            foreach ($services_with_observers as $service_name => $options) {
+                $service = app('structure')->transformNameService($service_name);
+                $model_class    = config('structure.paths.models').$service;
+                $observer_class = config('structure.paths.observers').$service.'Observer';
+                $model_class::observe( $observer_class );
+            }
+        }
     }
 
     /**
