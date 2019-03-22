@@ -8,9 +8,10 @@
 			'observers'    => 'App\Observers\\',
 			'repositories' => 'App\Repositories\\',
 			'services'     => 'App\Services\\',
+			'jobs'		   => 'App\Jobs\\',
 			'controller'   => 'App\Http\Controllers\API\\',
 			'requests'     => 'App\Http\Requests\API\\',
-			'resources'    => 'App\Http\Resources\\',
+			'resources'    => 'App\Http\Resources\\'
 		],
 		
 		/* Component Options */

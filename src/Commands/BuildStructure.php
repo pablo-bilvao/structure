@@ -124,5 +124,14 @@ class BuildStructure extends Command{
             fwrite( $handler, view( 'structureview::routes', ['services' => array_keys($services_to_build), 'services_routes' => data_get( config('structure.services'), '*.routes' ), 'routes' => config('structure.routes')] )->render() );
             fclose( $handler );
         }
+
+        /* Job */
+        $job = 'SynchronizeModelJob';
+        if( !file_exists( app('structure')->paths['jobs'].$job.'.php' ) ){
+            $handler = fopen( app('structure')->paths['jobs'].$job.'.php', 'w+' );
+            fwrite( $handler, "<?php \n\n\t" );
+            fwrite( $handler, view( 'structureview::jobs' )->render() );
+            fclose( $handler );            
+        }
     }
 }
