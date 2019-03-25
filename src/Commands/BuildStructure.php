@@ -127,11 +127,11 @@ class BuildStructure extends Command{
 
         /* Job */
         $job = 'SynchronizeModelJob';
-        if( !file_exists( app('structure')->paths['jobs'].$job.'.php' ) ){
+        #if( !file_exists( app('structure')->paths['jobs'].$job.'.php' ) ){
             $handler = fopen( app('structure')->paths['jobs'].$job.'.php', 'w+' );
             fwrite( $handler, "<?php \n\n\t" );
             fwrite( $handler, view( 'structureview::jobs' )->render() );
             fclose( $handler );            
-        }
+        #}
     }
 }

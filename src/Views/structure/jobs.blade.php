@@ -18,6 +18,7 @@
         use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
         public $data;
+        public $tries = 3;
 
         /**
          * Create a new job instance.
@@ -47,16 +48,16 @@
                     ]);
 
                     $response = json_decode($res->getBody()->getContents(), TRUE);
-                    if( !isset($response['data']) ) //condicion si falla. puede preguntar por otra cosa si es necesario
-                        $this->ponerEnCola( [$info] );
+                    #if( !isset($response['data']) ) //condicion si falla el api
+                    #    $this->ponerEnCola( [$info] );
 
                 } catch (Exception $e) {
-                    
-                    $this->ponerEnCola([$info]);
+                    //Debería notificar y fallar
+                    #$this->ponerEnCola([$info]);
                     
                 } catch (RequestException $re){
-                    
-                    $this->ponerEnCola([$info]);
+                    //Debería notificar y fallar
+                    #$this->ponerEnCola([$info]);
 
                 }
 
@@ -68,5 +69,9 @@
             
             Bus::dispatch( new SynchronizeModelJob($data) );
 
+        }
+
+        public function failed(Exception $e){
+            #Notificar en algún lado
         }
     }
