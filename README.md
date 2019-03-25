@@ -12,7 +12,8 @@ Structure Basic es un componente para Laravel. Nos permite crear una estrucutra 
         - <a href="#component-options">Component Options</a>
         - <a href="#routes">Routes</a>
         - <a href="#services-ejemplo">Services (ejemplo)</a>
-        - <a href="#services-estructura">Services (estructura)</a>        
+        - <a href="#services-estructura">Services (estructura)</a>
+        - <a href="#observer-&-job">Observer & Job</a>
 - <a href="#método-principal">Método Principal</a>
 
 ## Instalación
