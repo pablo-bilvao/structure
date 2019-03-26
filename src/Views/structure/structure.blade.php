@@ -15,7 +15,11 @@
 		],
 		
 		/* Component Options */
-		'replace_all' => FALSE,
+		'replaces' => [
+			'routes' 		  => FALSE,
+			'microservices'   => TRUE,
+			'synchronize_job' => TRUE
+		],,
 
 		/* Your routes structure here (3 levels) */
         'routes' => [

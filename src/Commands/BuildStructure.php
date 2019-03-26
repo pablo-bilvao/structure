@@ -19,7 +19,7 @@ class BuildStructure extends Command{
         
         foreach ($services_to_build as $service => $info ) {
             $myService   = app('structure')->transformNameService($service);
-            $replace_all = ( isset($info['replace_all']) ) ? $info['replace_all'] : config('structure.replace_all');
+            $replace_all = ( isset($info['replace_all']) ) ? $info['replace_all'] : FALSE;
 
             /* Controller */
             $controller = $myService.'Controller';
@@ -113,13 +113,15 @@ class BuildStructure extends Command{
         }
         
         /* Microservices Config */
-        $handler = fopen( config_path('microservices.php'), 'w+' );
-        fwrite( $handler, "<?php \n\n\t" );
-        fwrite( $handler, view( 'structureview::microservice', ['services' => array_keys($services_to_build), 'paths' => config('structure.paths')] )->render() );
-        fclose( $handler );
+        if( config('structure.replaces.microservices') ){
+            $handler = fopen( config_path('microservices.php'), 'w+' );
+            fwrite( $handler, "<?php \n\n\t" );
+            fwrite( $handler, view( 'structureview::microservice', ['services' => array_keys($services_to_build), 'paths' => config('structure.paths')] )->render() );
+            fclose( $handler );
+        }
 
         /* Routes Config */
-        if( config('structure.replace_all') ){
+        if( config('structure.replaces.routes') ){
             $handler = fopen( base_path('routes/api.php'), 'w+' );
             fwrite( $handler, "<?php \n\n\t" );
             fwrite( $handler, view( 'structureview::routes', ['services' => array_keys($services_to_build), 'services_routes' => data_get( config('structure.services'), '*.routes' ), 'routes' => config('structure.routes')] )->render() );
@@ -127,12 +129,12 @@ class BuildStructure extends Command{
         }
 
         /* Job */
-        $job = 'SynchronizeModelJob';
-        #if( !file_exists( app('structure')->paths['jobs'].$job.'.php' ) ){
+        if( config('structure.replaces.synchronize_job') ){
+            $job = 'SynchronizeModelJob';            
             $handler = fopen( app('structure')->paths['jobs'].$job.'.php', 'w+' );
             fwrite( $handler, "<?php \n\n\t" );
             fwrite( $handler, view( 'structureview::jobs' )->render() );
-            fclose( $handler );            
-        #}
+            fclose( $handler );
+        }
     }
 }
