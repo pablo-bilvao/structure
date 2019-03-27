@@ -23,7 +23,7 @@
         /**
          * Create a new job instance.
          *
-         * @return void
+         * @return  void
          */
         public function __construct( array $data ){
             $this->data = $data;
@@ -32,13 +32,14 @@
         /**
          * Execute the job.
          *
-         * @return void
+         * @return  void
          */
         public function handle(){
 
             foreach ($this->data as $info) {
                 try {
                     $url_api = env($info['HOST']).$info['RESOURCE'];
+                    Log::info( "CURL", ['urlToSynchorinize' => $url_api, 'data' => $info] );
                     $http_client = new ClientHttp([ 'base_uri' => $url_api ]);
                     $res = $http_client->request($info['METHOD'], $url_api, [
                         /*'headers' => [
@@ -54,11 +55,12 @@
                 } catch (Exception $e) {
                     //Debería notificar y fallar
                     #$this->ponerEnCola([$info]);
+                    Log::error("ERROR SynchronizeModelJob", [$e->getMessage()]);
                     
                 } catch (RequestException $re){
                     //Debería notificar y fallar
                     #$this->ponerEnCola([$info]);
-
+                    Log::error("ERROR SynchronizeModelJob", [$e->getMessage()]);
                 }
 
             }
@@ -73,5 +75,6 @@
 
         public function failed(Exception $e){
             #Notificar en algún lado
+            Log::error("ERROR SynchronizeModelJob", [$e->getMessage()]);
         }
     }
