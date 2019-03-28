@@ -14,7 +14,7 @@
 		public function index(){
 			if( \CircuitBreaker::isAvailable( '{{ $service }}Service::index' ) ){
 	        	try{
-	        		return $this->repository->all();
+	        		return $this->repository->paginate();
 	        	}catch(Exception $e){
 	        		\CircuitBreaker::reportFailure( '{{ $service }}Service::index' );
 	        		// Aca debería haber una alerta para notificar que no anda.
