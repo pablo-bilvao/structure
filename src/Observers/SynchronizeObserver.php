@@ -3,7 +3,7 @@
 namespace Structure\Basic\Observers;
 
 use Illuminate\Database\Eloquent\Model;
-use Structure\Basic\Jobs\SynchronizeModelJob;
+use App\Jobs\SynchronizeModelJob;
 
 class SynchronizeObserver
 {

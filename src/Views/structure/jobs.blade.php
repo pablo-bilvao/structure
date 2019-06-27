@@ -1,72 +1,63 @@
 
-    namespace App\Jobs;
+namespace App\Jobs;
 
-    use Illuminate\Bus\Queueable;
-    use Illuminate\Queue\SerializesModels;
-    use Illuminate\Queue\InteractsWithQueue;
-    use Illuminate\Contracts\Queue\ShouldQueue;
-    use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 
-    use Bus;
-    use Log;
-    use Exception;
-    use \GuzzleHttp\Client as ClientHttp;
-    use \GuzzleHttp\Exception\RequestException;
+use Log;
+use Exception;
 
-    class SynchronizeModelJob implements ShouldQueue
+class SynchronizeModelJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public $data;
+    public $tries = 3;
+
+    /**
+     * Create a new job instance.
+     *
+     * @return    void
+     */
+    public function __construct( array $data ){
+        $this->data = $data;
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @return    void
+     */
+    public function handle()
     {
-        use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+        try {
 
-        public $data;
+            ["RESOURCE" => $resource, "ACTION" => $action, "PARAMETERS" => $data] = $this->data;
 
-        /**
-         * Create a new job instance.
-         *
-         * @return void
-         */
-        public function __construct( array $data ){
-            $this->data = $data;
-        }
+            if ( !class_exists('\\App\\Models\\' . $resource) )
+                return Log::error('Resource "'.$resource.'" not found');
 
-        /**
-         * Execute the job.
-         *
-         * @return void
-         */
-        public function handle(){
+            $Model = '\\App\\Models\\' . $resource;
 
-            foreach ($this->data as $info) {
-                try {
-                    $url_api = env($info['HOST']).$info['RESOURCE'];
-                    $http_client = new ClientHttp([ 'base_uri' => $url_api ]);
-                    $res = $http_client->request($info['METHOD'], $url_api, [
-                        /*'headers' => [
-                            'Authorization' => 'Bearer '.$token
-                        ],*/
-                        'json' => $info['PARAMETERS']
-                    ]);
+            if ($action == "CREATE") return $Model::create($data);
 
-                    $response = json_decode($res->getBody()->getContents(), TRUE);
-                    if( !isset($response['data']) ) //condicion si falla. puede preguntar por otra cosa si es necesario
-                        $this->ponerEnCola( [$info] );
+            if ($action == "UPDATE") {
+                $model = $Model::find($data['id']);
 
-                } catch (Exception $e) {
-                    
-                    $this->ponerEnCola([$info]);
-                    
-                } catch (RequestException $re){
-                    
-                    $this->ponerEnCola([$info]);
+                if (!$model) return $Model::create($data);
 
-                }
-
+                return $model->update($data);
             }
-
-        }
-
-        public function ponerEnCola( $data ){
-            
-            Bus::dispatch( new SynchronizeModelJob($data) );
-
+        } catch (Exception $e) {
+            Log::error("ERROR SynchronizeModelJob", [$e->getMessage()]);
         }
     }
+
+    public function failed(Exception $e)
+    {
+        Log::error("ERROR SynchronizeModelJob", [$e->getMessage()]);
+    }
+}
