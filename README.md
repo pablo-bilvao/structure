@@ -12,7 +12,8 @@ Structure Basic es un componente para Laravel. Nos permite crear una estrucutra 
         - <a href="#component-options">Component Options</a>
         - <a href="#routes">Routes</a>
         - <a href="#services-ejemplo">Services (ejemplo)</a>
-        - <a href="#services-estructura">Services (estructura)</a>        
+        - <a href="#services-estructura">Services (estructura)</a>
+        - <a href="#observer--job">Observer & Job</a>
 - <a href="#método-principal">Método Principal</a>
 
 ## Instalación
@@ -54,6 +55,7 @@ return [
       'observers'    => 'App\Observers',
       'repositories' => 'App\Repositories\\',
       'services'     => 'App\Services\\',
+      'jobs'         => 'App\Jobs\\',
       'controller'   => 'App\Http\Controllers\API\\',
       'requests'     => 'App\Http\Requests\API\\',
       'resources'    => 'App\Http\Resources\\',
@@ -195,7 +197,17 @@ El nombre de la interfaz pasará de esto: `nombre_servicio_en_ingles_plural` (no
 Ej de uso: `app('role')->update($atributos, $id);` No es necesario que específiqe las 3, puede solo necesitar una sola.
 - `rules_store`: En caso de usar `store` puede específicar las reglas de validación teniendo en cuenta la documentación de <a target="_blank" href="https://laravel.com/docs/5.7/validation#form-request-validation">Laravel</a>
 - `rules_update`: En caso de usar `update` puede específicar las reglas de validación teniendo en cuenta la documentación de <a target="_blank" href="https://laravel.com/docs/5.7/validation#form-request-validation">Laravel</a>
-- `observer`: recibe un boolean, si es `true` le creará una clase en la carpeta de `observers`, en esta versión deberá registrarlo manualmente en su service provider. Tenga en cuenta la documentación de <a target="_blank" href="https://laravel.com/docs/5.7/eloquent#observers">Laravel</a>
+- `observer`: recibe un boolean, si es `true` le creará una clase en la carpeta de `observers`. Tenga en cuenta la documentación de <a target="_blank" href="https://laravel.com/docs/5.7/eloquent#observers">Laravel</a>
+
+#### Observer & Job
+
+Cuando en nuestro service configuramos el `observer => true` nos creará la clase Observer con el nombre de nuestro servicio en el path configurado. No es necesario registrar el observer, lo tomará automáticamente.
+Si bien, los observers se pueden utilizar para diferentes funcionalidades, en el packages está pensado principalmente para la sincronización de datos a través de colas de procesos. No quita que lo puedas utilizar para realizar otra cosa.
+
+Para poder utilizarlo, primero tenes que configurar algún driver para queues. Tenga en cuenta la documentación de <a target="_blank" href="https://laravel.com/docs/5.7/queues">Laravel</a>
+
+Una vez configurado, lo único que hay que configurar para utilizar la sincronización es configurar los datos del api que va a consumir para sincronizar (o las apis). 
+La clase observer ya tendrá lo necesario para hacerlo.
 
 ## Método Principal
 
